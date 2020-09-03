@@ -7,9 +7,7 @@ export class Contratante extends EntityAuditedHasId {
         nullable: false,
     })
     Nome: string;
-    @Column({
-        nullable: false,
-    })
+    @PrimaryColumn()
     CPF: string;
     @Column({
         nullable: false,
