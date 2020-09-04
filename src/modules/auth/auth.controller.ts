@@ -6,7 +6,7 @@ import {
   Get,
   Request,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiResponse, ApiTags, ApiBearerAuth, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService, LoginPayload, RegisterPayload } from './';
 import { UsersService } from './../user';
@@ -17,8 +17,9 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService,
-  ) {}
+  ) { }
 
+  @ApiOperation({ operationId: 'login', })
   @Post('login')
   @ApiResponse({ status: 201, description: 'Successful Login' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
@@ -28,6 +29,7 @@ export class AuthController {
     return await this.authService.createToken(user);
   }
 
+  @ApiOperation({ operationId: 'register', })
   @Post('register')
   @ApiResponse({ status: 201, description: 'Successful Registration' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
@@ -37,6 +39,7 @@ export class AuthController {
     return await this.authService.createToken(user);
   }
 
+  @ApiOperation({ operationId: 'getLoggerInUser', })
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @Get('me')
